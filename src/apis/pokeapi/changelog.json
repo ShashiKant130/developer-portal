@@ -1,0 +1,9 @@
+[
+  {
+    "version": "2.0.0",
+    "date": "2024-01-15",
+    "type": "feature",
+    "title": "Initial portal integration",
+    "description": "PokéAPI registered as the demo API for documentation and sandbox."
+  }
+]
