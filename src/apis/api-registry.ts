@@ -86,3 +86,7 @@ export const API_REGISTRY: ApiDefinition[] = [
     baseUrl: 'https://api.example.com/v1',
   },
 ]
+
+export function getApiById(id: string): ApiDefinition | undefined {
+  return API_REGISTRY.find((api) => api.id === id)
+}
