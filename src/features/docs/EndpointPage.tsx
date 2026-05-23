@@ -1,8 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
-import { getApiById } from '@/apis/api-registry'
-import { parseOpenApiSpec } from '@/lib/spec-parser'
-import { MethodBadge } from '@/components/ui/Badge'
-import { EmptyState, ErrorState } from '@/components/ui/StateViews'
+import { getApiById } from '@/apis/api-registry.ts'
+import { parseOpenApiSpec } from '@/lib/spec-parser.ts'
+import { MethodBadge } from '@/components/ui/Badge.tsx'
+import { EmptyState, ErrorState } from '@/components/ui/StateViews.tsx'
+import { SandboxPanel } from '@/features/sandbox/SandboxPanel.tsx'
 
 export function EndpointPage() {
   const { apiId, endpointId } = useParams<{ apiId: string; endpointId: string }>()
@@ -84,7 +85,7 @@ export function EndpointPage() {
         </ul>
       </section>
 
-      {/* TODO: Add SandboxPanel */}
+      <SandboxPanel api={api} endpoint={endpoint} />
     </div>
   )
 }
