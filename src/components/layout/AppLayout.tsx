@@ -3,6 +3,7 @@ import { API_REGISTRY } from '@/apis/api-registry'
 import { Button } from '@/components/ui/Button.tsx'
 import { cn } from '@/lib/cn.ts'
 import { StatusBanner } from './StatusBanner.tsx'
+import { CommandPalette } from './CommandPalette.tsx'
 
 const navItems = [
     { to: '/docs', label: 'Documentation' },
@@ -18,6 +19,7 @@ export function AppLayout() {
     return (
         <div className="flex h-screen flex-col overflow-hidden">
             <StatusBanner />
+            <CommandPalette />
             <div className="flex min-h-0 flex-1">
                 <aside className="flex h-full w-64 shrink-0 flex-col border-r border-slate-800 bg-slate-900">
                     <div className="shrink-0 border-b border-slate-800 p-4">

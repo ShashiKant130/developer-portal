@@ -123,3 +123,15 @@ export function parseOpenApiSpec(doc: OpenAPIV3.Document): EndpointDef[] {
 
   return endpoints
 }
+
+export function getAllEndpoints(
+  registry: { id: string; name: string; spec: OpenAPIV3.Document }[],
+): (EndpointDef & { apiId: string; apiName: string })[] {
+  return registry.flatMap((api) =>
+    parseOpenApiSpec(api.spec).map((ep) => ({
+      ...ep,
+      apiId: api.id,
+      apiName: api.name,
+    })),
+  )
+}
