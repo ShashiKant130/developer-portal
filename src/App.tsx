@@ -9,15 +9,19 @@ import { KeysPage } from '@/features/keys/KeysPage.tsx'
 import { AnalyticsPage } from '@/features/analytics/AnalyticsPage.tsx'
 import { StatusPage } from '@/features/status/StatusPage.tsx'
 import { ChangelogPage } from '@/features/changelog/ChangelogPage.tsx'
+import { AuthProvider } from '@/features/auth/AuthProvider.tsx'
+import { SignupPage } from '@/features/auth/SignupPage.tsx'
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
           <Route
             path="/"
             element={
@@ -38,6 +42,7 @@ function App() {
           <Route path="*" element={<Navigate to="/docs" replace />} />
         </Routes>
       </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   )
 }

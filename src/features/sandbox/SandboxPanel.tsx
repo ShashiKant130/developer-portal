@@ -13,6 +13,7 @@ import {
   type SnippetRequest,
 } from '@/lib/snippet-generator'
 import { useSandboxRequest } from './useSandboxRequest.ts'
+import { useAuth } from '@/features/auth/useAuth.ts'
 
 interface SandboxPanelProps {
   api: ApiDefinition
@@ -20,10 +21,7 @@ interface SandboxPanelProps {
 }
 
 export function SandboxPanel({ api, endpoint }: SandboxPanelProps) {
-    // TODO: Implement getAccessToken
-    const getAccessToken = () => {
-        return 'dummy-token'
-    }
+  const { getAccessToken } = useAuth()
   const allKeys = useKeysStore((s) => s.keys)
   const touchKey = useKeysStore((s) => s.touchKey)
   const activeKey = useMemo(

@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { Skeleton } from '@/components/ui/StateViews.tsx'
+import { useAuth } from './useAuth.ts'
+
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  // TODO: replace with useAuth() once auth is implemented
-  const loading = false
-  const user = true
+  const { user, loading } = useAuth()
   const location = useLocation()
 
   if (loading) {

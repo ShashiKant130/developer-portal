@@ -1,47 +1,42 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/Button.tsx'
 import { Input, Label } from '@/components/ui/Input.tsx'
 import { useAuth } from './useAuth.ts'
 
-export function LoginPage() {
-  const { signIn, user } = useAuth()
+export function SignupPage() {
+  const { signUp, user } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/docs'
 
-  if (user) return <Navigate to={from} replace />
+  if (user) return <Navigate to="/docs" replace />
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (password !== confirm) {
+      setError('Passwords do not match.')
+      return
+    }
     setLoading(true)
     setError(null)
-    const result = await signIn(email, password)
+    const result = await signUp(email, password)
     setLoading(false)
     if (result.error) setError(result.error)
-    else navigate(from, { replace: true })
+    else navigate('/docs', { replace: true })
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-950 p-4">
       <div className="w-full max-w-md rounded-xl border border-slate-800 bg-slate-900 p-8">
-        <h1 className="text-2xl font-bold text-white">Developer Portal</h1>
-        <p className="mt-2 text-sm text-slate-400">Sign in to access API docs and sandbox</p>
+        <h1 className="text-2xl font-bold text-white">Create account</h1>
         <form onSubmit={(e) => void handleSubmit(e)} className="mt-6 space-y-4">
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div>
             <Label htmlFor="password">Password</Label>
@@ -52,18 +47,27 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              autoComplete="current-password"
+            />
+          </div>
+          <div>
+            <Label htmlFor="confirm">Confirm password</Label>
+            <Input
+              id="confirm"
+              type="password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              required
             />
           </div>
           {error && <p className="text-sm text-red-400" role="alert">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign in'}
+            {loading ? 'Creating…' : 'Sign up'}
           </Button>
         </form>
         <p className="mt-4 text-center text-sm text-slate-500">
-          No account?{' '}
-          <Link to="/signup" className="text-indigo-400 hover:underline">
-            Sign up
+          Already have an account?{' '}
+          <Link to="/login" className="text-indigo-400 hover:underline">
+            Sign in
           </Link>
         </p>
       </div>

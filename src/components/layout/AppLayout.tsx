@@ -1,9 +1,10 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { API_REGISTRY } from '@/apis/api-registry'
 import { Button } from '@/components/ui/Button.tsx'
 import { cn } from '@/lib/cn.ts'
 import { StatusBanner } from './StatusBanner.tsx'
 import { CommandPalette } from './CommandPalette.tsx'
+import { useAuth } from '@/features/auth/useAuth.ts'
 
 const navItems = [
     { to: '/docs', label: 'Documentation' },
@@ -14,7 +15,8 @@ const navItems = [
 ]
 
 export function AppLayout() {
-    // TODO: Implement authentication check
+    const { user, signOut } = useAuth()
+    const navigate = useNavigate()
 
     return (
         <div className="flex h-screen flex-col overflow-hidden">
@@ -24,8 +26,7 @@ export function AppLayout() {
                 <aside className="flex h-full w-64 shrink-0 flex-col border-r border-slate-800 bg-slate-900">
                     <div className="shrink-0 border-b border-slate-800 p-4">
                         <h1 className="text-lg font-bold text-white">Dev Portal</h1>
-                        {/* TODO: Implement user email */}
-                        <p className="truncate text-xs text-slate-500">{'Dummy'}</p>
+                        <p className="truncate text-xs text-slate-500">{user?.email ?? ''}</p>
                     </div>
                     <nav
                         className="scrollbar-hide min-h-0 flex-1 overflow-y-auto p-3"
@@ -72,8 +73,7 @@ export function AppLayout() {
                         <Button
                             variant="ghost"
                             className="w-full"
-                            // TODO: Implement sign out
-                            onClick={() => { }}
+                            onClick={() => signOut().then(() => navigate('/login'))}
                         >
                             Sign out
                         </Button>
