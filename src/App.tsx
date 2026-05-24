@@ -8,6 +8,7 @@ import { LoginPage } from '@/features/auth/LoginPage.tsx'
 import { KeysPage } from '@/features/keys/KeysPage.tsx'
 import { AnalyticsPage } from '@/features/analytics/AnalyticsPage.tsx'
 import { StatusPage } from '@/features/status/StatusPage.tsx'
+import { ChangelogPage } from '@/features/changelog/ChangelogPage.tsx'
 
 const queryClient = new QueryClient()
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="keys" element={<KeysPage />} />
             <Route path="analytics" element={<AnalyticsPage />} />
             <Route path="status" element={<StatusPage />} />
+            <Route path="changelog" element={<ChangelogPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/docs" replace />} />
         </Routes>
