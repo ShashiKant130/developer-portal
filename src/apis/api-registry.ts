@@ -3,6 +3,9 @@ import pokeapiSpec from './pokeapi/openapi.json'
 import pokeapiChangelog from './pokeapi/changelog.json'
 import pokeapiDocs from './pokeapi/docs.md?raw'
 import stubPaymentsSpec from './stub-payments/openapi.json'
+import jsonplaceholderSpec from './jsonplaceholder/openapi.json'
+import jsonplaceholderChangelog from './jsonplaceholder/changelog.json'
+import jsonplaceholderDocs from './jsonplaceholder/docs.md?raw'
 
 const POKEAPI_ERRORS = [
   {
@@ -35,6 +38,23 @@ const PAYMENTS_ERRORS = [
     description: 'Payment ID does not exist.',
     causes: ['Stale ID', 'Wrong environment'],
     resolution: 'Confirm you are using the correct environment API key.',
+  },
+]
+
+const JSONPLACEHOLDER_ERRORS = [
+  {
+    code: 'TODO_NOT_FOUND',
+    httpStatus: 404,
+    description: 'The requested todo does not exist.',
+    causes: ['Invalid todo ID', 'ID out of range'],
+    resolution: 'Use an ID between 1 and 200.',
+  },
+  {
+    code: 'INVALID_PAYLOAD',
+    httpStatus: 400,
+    description: 'Request body is malformed or missing required fields.',
+    causes: ['Missing title', 'Invalid userId type'],
+    resolution: 'Ensure userId (integer), title (string), and completed (boolean) are provided for write operations.',
   },
 ]
 
@@ -84,6 +104,23 @@ export const API_REGISTRY: ApiDefinition[] = [
     ],
     errors: PAYMENTS_ERRORS,
     baseUrl: 'https://api.example.com/v1',
+  },
+  {
+    id: 'jsonplaceholder',
+    name: 'JSONPlaceholder Todos',
+    version: '1.0.0',
+    spec: jsonplaceholderSpec as OpenAPIObject,
+    docsMarkdown: jsonplaceholderDocs,
+    changelog: jsonplaceholderChangelog as ChangelogEntry[],
+    sdks: [
+      {
+        lang: 'JavaScript',
+        install: 'npm install axios',
+        repo: 'https://github.com/axios/axios',
+      },
+    ],
+    errors: JSONPLACEHOLDER_ERRORS,
+    baseUrl: 'https://jsonplaceholder.typicode.com',
   },
 ]
 

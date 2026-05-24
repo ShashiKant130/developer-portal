@@ -1,0 +1,9 @@
+[
+  {
+    "version": "1.0.0",
+    "date": "2025-05-23",
+    "type": "feature",
+    "title": "Todos API registered",
+    "description": "JSONPlaceholder todos endpoints added to the developer portal."
+  }
+]
