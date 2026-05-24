@@ -5,6 +5,7 @@ import { AppLayout } from '@/components/layout/AppLayout.tsx'
 import { ApiDocsPage, DocsIndexPage } from '@/features/docs/DocsPage.tsx'
 import { EndpointPage } from '@/features/docs/EndpointPage.tsx'
 import { LoginPage } from '@/features/auth/LoginPage.tsx'
+import { KeysPage } from '@/features/keys/KeysPage.tsx'
 
 
 const queryClient = new QueryClient()
@@ -27,6 +28,7 @@ function App() {
             <Route path="docs" element={<DocsIndexPage />} />
             <Route path="docs/:apiId" element={<ApiDocsPage />} />
             <Route path="docs/:apiId/endpoint/:endpointId" element={<EndpointPage />} />
+            <Route path="keys" element={<KeysPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/docs" replace />} />
         </Routes>
