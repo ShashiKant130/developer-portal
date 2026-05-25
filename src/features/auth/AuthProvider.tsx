@@ -69,6 +69,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = useCallback(
     async (email: string, password: string) => {
+      if (!supabase) {
+        return {
+          error:
+            'Supabase is not configured. Copy .env.example to .env or use Continue as guest.',
+        }
+      }
       if (!email || password.length < 6) {
         return { error: 'Email required and password must be at least 6 characters.' }
       }
@@ -81,6 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = useCallback(
     async (email: string, password: string) => {
+      if (!supabase) {
+        return {
+          error:
+            'Supabase is not configured. Copy .env.example to .env or use Continue as guest.',
+        }
+      }
       if (!email || !password) return { error: 'Email and password are required.' }
       clearGuest()
       const { error } = await supabase.auth.signInWithPassword({ email, password })
