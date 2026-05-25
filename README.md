@@ -36,11 +36,13 @@ An extensible API documentation and sandbox platform for external developers. Br
 git clone <repository-url>
 cd developer-portal
 npm ci
-cp .env.example .env   # fill in your Supabase credentials (required for sign-in)
+cp .env.example .env   # optional — only needed for sign-in / sign-up
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) (or the port Vite prints in the terminal).
+
+**No `.env`?** The app still runs. On `/login`, click **Continue as guest** to explore the portal. Add Supabase credentials to `.env` when you want to test authentication.
 
 ## Environment variables
 
