@@ -15,8 +15,8 @@ const navItems = [
 ]
 
 export function AppLayout() {
-    const { user, signOut } = useAuth()
-    const navigate = useNavigate()
+  const { user, isGuest, signOut } = useAuth()
+  const navigate = useNavigate()
 
     return (
         <div className="flex h-screen flex-col overflow-hidden">
@@ -26,7 +26,9 @@ export function AppLayout() {
                 <aside className="flex h-full w-64 shrink-0 flex-col border-r border-slate-800 bg-slate-900">
                     <div className="shrink-0 border-b border-slate-800 p-4">
                         <h1 className="text-lg font-bold text-white">Dev Portal</h1>
-                        <p className="truncate text-xs text-slate-500">{user?.email ?? ''}</p>
+                        <p className="truncate text-xs text-slate-500">
+                          {isGuest ? 'Guest' : user?.email ?? ''}
+                        </p>
                     </div>
                     <nav
                         className="scrollbar-hide min-h-0 flex-1 overflow-y-auto p-3"
@@ -75,7 +77,7 @@ export function AppLayout() {
                             className="w-full"
                             onClick={() => signOut().then(() => navigate('/login'))}
                         >
-                            Sign out
+                            {isGuest ? 'Exit guest mode' : 'Sign out'}
                         </Button>
                     </div>
                 </aside>

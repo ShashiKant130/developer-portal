@@ -5,7 +5,7 @@ import { Input, Label } from '@/components/ui/Input.tsx'
 import { useAuth } from './useAuth.ts'
 
 export function SignupPage() {
-  const { signUp, user } = useAuth()
+  const { signUp, user, isGuest } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
@@ -13,7 +13,7 @@ export function SignupPage() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  if (user) return <Navigate to="/docs" replace />
+  if (user || isGuest) return <Navigate to="/docs" replace />
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

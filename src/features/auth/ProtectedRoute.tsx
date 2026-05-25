@@ -5,7 +5,7 @@ import { useAuth } from './useAuth.ts'
 
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { user, loading } = useAuth()
+  const { user, isGuest, loading } = useAuth()
   const location = useLocation()
 
   if (loading) {
@@ -16,7 +16,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
     )
   }
 
-  if (!user) {
+  if (!user && !isGuest) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
 

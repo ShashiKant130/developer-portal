@@ -5,9 +5,11 @@ export interface AuthContextValue {
   user: User | null
   session: Session | null
   loading: boolean
+  isGuest: boolean
   signUp: (email: string, password: string) => Promise<{ error: string | null }>
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
+  continueAsGuest: () => void
   getAccessToken: () => string | null
 }
 

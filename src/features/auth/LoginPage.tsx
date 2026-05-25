@@ -5,7 +5,7 @@ import { Input, Label } from '@/components/ui/Input.tsx'
 import { useAuth } from './useAuth.ts'
 
 export function LoginPage() {
-  const { signIn, user } = useAuth()
+  const { signIn, user, isGuest, continueAsGuest } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -14,7 +14,12 @@ export function LoginPage() {
   const location = useLocation()
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/docs'
 
-  if (user) return <Navigate to={from} replace />
+  if (user || isGuest) return <Navigate to={from} replace />
+
+  const handleGuest = () => {
+    continueAsGuest()
+    navigate(from, { replace: true })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -60,6 +65,14 @@ export function LoginPage() {
             {loading ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>
+        <Button
+          type="button"
+          variant="ghost"
+          className="mt-3 w-full"
+          onClick={handleGuest}
+        >
+          Continue as guest
+        </Button>
         <p className="mt-4 text-center text-sm text-slate-500">
           No account?{' '}
           <Link to="/signup" className="text-indigo-400 hover:underline">
