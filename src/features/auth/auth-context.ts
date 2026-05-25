@@ -6,6 +6,7 @@ export interface AuthContextValue {
   session: Session | null
   loading: boolean
   isGuest: boolean
+  isSupabaseConfigured: boolean
   signUp: (email: string, password: string) => Promise<{ error: string | null }>
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>

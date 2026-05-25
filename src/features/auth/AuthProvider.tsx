@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase.ts'
+import { isSupabaseConfigured, supabase } from '@/lib/supabase.ts'
 import { AuthContext, type AuthContextValue } from './auth-context.ts'
 
 const GUEST_SESSION_KEY = 'portal-guest'
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [isGuest, setIsGuest] = useState(loadGuestSession)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isSupabaseConfigured)
 
   const clearGuest = useCallback(() => {
     setIsGuest(false)
@@ -40,6 +40,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session)
       setUser(data.session?.user ?? null)
@@ -89,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearGuest()
       return
     }
-    await supabase.auth.signOut()
+    if (supabase) await supabase.auth.signOut()
   }, [isGuest, clearGuest])
 
   const getAccessToken = useCallback(() => {
@@ -103,6 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       loading,
       isGuest,
+      isSupabaseConfigured,
       signUp,
       signIn,
       signOut,

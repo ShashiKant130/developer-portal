@@ -5,7 +5,7 @@ import { Input, Label } from '@/components/ui/Input.tsx'
 import { useAuth } from './useAuth.ts'
 
 export function LoginPage() {
-  const { signIn, user, isGuest, continueAsGuest } = useAuth()
+  const { signIn, user, isGuest, continueAsGuest, isSupabaseConfigured } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -36,6 +36,12 @@ export function LoginPage() {
       <div className="w-full max-w-md rounded-xl border border-slate-800 bg-slate-900 p-8">
         <h1 className="text-2xl font-bold text-white">Developer Portal</h1>
         <p className="mt-2 text-sm text-slate-400">Sign in to access API docs and sandbox</p>
+        {!isSupabaseConfigured && (
+          <p className="mt-3 rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-300">
+            No <code className="text-amber-200">.env</code> detected — use <strong>Continue as guest</strong> or copy{' '}
+            <code className="text-amber-200">.env.example</code> to <code className="text-amber-200">.env</code> for sign-in.
+          </p>
+        )}
         <form onSubmit={(e) => void handleSubmit(e)} className="mt-6 space-y-4">
           <div>
             <Label htmlFor="email">Email</Label>
@@ -61,7 +67,7 @@ export function LoginPage() {
             />
           </div>
           {error && <p className="text-sm text-red-400" role="alert">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading || !isSupabaseConfigured}>
             {loading ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>
